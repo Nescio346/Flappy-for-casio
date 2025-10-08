@@ -5,8 +5,8 @@
 #define SCREEN_W 383
 #define SCREEN_H 216
 #define BLOCK 25
-#define JUMP_POWER 5
-#define GRAVITY 1.8
+#define JUMP_POWER 4
+#define GRAVITY 2
 
 // Prototypes
 int jump(int *y, int *springmulti);
@@ -19,7 +19,7 @@ int main(void) {
     int last = 1;
 	int valtijd = 0;
 	int springtijd = 0;
-	int springmulti = 1;
+	int springmulti = 4;
 
     while (1) {
         CMT_Delay_100micros(200);
@@ -28,24 +28,23 @@ int main(void) {
 			valtijd++;
         	gravity(&y, &valtijd);
 		}
-        //int key;
 		if (springtijd <= 3 && springtijd >= 1) {
 			jump(&y, &springmulti);
 			springtijd++;
-			springmulti++;
+			springmulti--;
 		}
 		else {
 			springtijd = 0;
-			springmulti = 1;
+			springmulti = 4;
 		}
-        if (PRGM_GetKey() == 57 && last == 1) {
+        if (PRGM_GetKey() == 28 && last == 1) {
 			springtijd++;
-            jump(&y, &springmulti);  // JUMP
+            jump(&y, &springmulti);
             last = 0;
 			valtijd = 0;
         }
-        else if (PRGM_GetKey() != 57) last = 1;
-        if (PRGM_GetKey() == 47) break;  // Exit
+        else if (PRGM_GetKey() != 28) last = 1;
+        if (PRGM_GetKey() == 47) break;
 
         draw(&x, &y);
     }
